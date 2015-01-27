@@ -67,13 +67,22 @@ for k,v in cities.iteritems():
         #increment query_date to the next day for next operation of loop
         query_date += datetime.timedelta(days=1) #increment query_date to the next day
 
+# Get the data from the Database and store it on DataFrame
 df = pd.read_sql('SELECT * FROM daily_temp', con)
 
-# Printing the mean temperature per city
+# below is a silly approach getting the mean and other data looping it out. This is not effecient in mho!
+# Printing the mean temperature per city. 
 for header in df.columns[1:]:
         print 'The mean temperature of >'+ header + ' is: ' + str(df[header].mean())
         df[header].plot()
         plt.show()
+
+# A better approach than the above:!
+df.iloc[:,1:].mean()
+
+# To plot the variance and changes:
+df.iloc[:,1:].plot()
+plt.show()
 
 
 
